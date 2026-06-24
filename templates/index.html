@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Image Caption Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            background: white;
+            color: black;
+            width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .upload-box {
+            border: 2px dashed #aaa;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-box:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #667eea;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        img {
+            margin-top: 20px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .caption {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📸 Image Caption Generator</h1>
+
+    <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+
+        <label class="upload-box">
+            Click to upload image
+            <input type="file" name="image" id="fileInput" required onchange="previewImage(event)">
+        </label>
+
+        <img id="preview" style="display:none;" />
+
+        <button type="submit">Generate Caption</button>
+
+        <div class="loader" id="loader">⏳ Generating caption...</div>
+
+    </form>
+
+    {% if image_path %}
+        <img src="{{ image_path }}">
+    {% endif %}
+
+    {% if caption %}
+        <div class="caption">✨ {{ caption }}</div>
+    {% endif %}
+</div>
+
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+        preview.style.display = "block";
+    }
+
+    function showLoader() {
+        document.getElementById("loader").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
